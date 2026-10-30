@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ONMX Treasury Reserve &amp; LP Vesting</title>
+  <meta name="description" content="Public 8-year linear vesting schedule for the 725M ONMX Treasury Reserve &amp; LP allocation via Magna, powered by Kraken." />
+  <style>
+    :root {
+      --bg: #070f1c;
+      --bg2: #0b1a33;
+      --card: rgba(15, 35, 70, 0.72);
+      --border: rgba(34, 211, 238, 0.22);
+      --text: #f4f8ff;
+      --muted: #9bb0cc;
+      --cyan: #22d3ee;
+      --navy: #0b2545;
+      --purple: #a78bfa;
+      --warn: #fbbf24;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(900px 500px at 85% 10%, rgba(34,211,238,.18), transparent 55%),
+        radial-gradient(700px 420px at 10% 0%, rgba(167,139,250,.16), transparent 50%),
+        linear-gradient(180deg, var(--bg), var(--bg2) 40%, #06101f);
+      min-height: 100vh;
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 18px 64px; }
+    header { text-align: center; margin-bottom: 22px; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 14px; border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(11,37,69,.55);
+      color: var(--cyan); font-size: 13px; letter-spacing: .02em;
+    }
+    h1 { font-size: clamp(1.6rem, 3vw, 2.25rem); margin: 14px 0 8px; font-weight: 750; }
+    .sub { color: var(--muted); max-width: 720px; margin: 0 auto; line-height: 1.5; }
+    .warn {
+      margin: 18px auto 0; max-width: 820px;
+      border: 1px solid rgba(251,191,36,.35);
+      background: rgba(251,191,36,.08);
+      color: #fde68a; border-radius: 14px; padding: 12px 14px; font-size: 14px; line-height: 1.45;
+    }
+    .grid { display: grid; gap: 14px; margin-top: 18px; }
+    .metrics { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    @media (max-width: 900px) { .metrics { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 560px) { .metrics { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 16px 14px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .metric .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+    .metric .value { font-size: 1.55rem; font-weight: 750; margin-top: 6px; }
+    .metric .detail { color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .section-title { margin: 28px 0 10px; font-size: 1.15rem; }
+    .caption { color: var(--muted); font-size: 13px; margin: -4px 0 12px; }
+    .props { display: grid; grid-template-columns: 180px 1fr; gap: 8px 14px; font-size: 14px; }
+    .props dt { color: var(--muted); }
+    .props dd { margin: 0; word-break: break-all; }
+    code { font-family: var(--mono); font-size: 12px; color: #dbeafe; }
+    .chart-wrap { position: relative; }
+    canvas#curve { width: 100%; height: auto; display: block; cursor: crosshair; touch-action: none; }
+    .tooltip {
+      position: absolute; pointer-events: none; z-index: 5;
+      min-width: 170px; padding: 10px 12px; border-radius: 10px;
+      background: rgba(7,15,28,.96); border: 1px solid var(--border);
+      box-shadow: var(--shadow); display: none;
+    }
+    .tooltip .date { color: var(--muted); font-size: 12px; margin-bottom: 4px; }
+    .tooltip .amt { font-weight: 700; font-size: 15px; }
+    .tooltip .pct { color: var(--muted); font-size: 12px; margin-top: 2px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 10px 8px; border-bottom: 1px solid rgba(255,255,255,.08); text-align: left; }
+    th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .status { display: inline-block; padding: 2px 8px; border-radius: 999px; background: rgba(251,191,36,.12); color: var(--warn); font-size: 12px; }
+    .links { display: grid; gap: 8px; }
+    .links a {
+      display: block; text-decoration: none; color: var(--text);
+      border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px;
+      background: rgba(11,37,69,.35);
+    }
+    .links a:hover { border-color: var(--cyan); }
+    .links .site { color: var(--cyan); font-size: 12px; margin-bottom: 2px; }
+    footer { margin-top: 28px; color: var(--muted); font-size: 12px; text-align: center; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="pill">ONMX · Magna powered by Kraken · BNB Chain</div>
+      <h1>Treasury Reserve &amp; LP Vesting</h1>
+      <p class="sub">Public representation of the 725,000,000 ONMX (72.5%) 8-year linear vesting schedule. Hover the curve for exact vested amount and date.</p>
+      <div class="warn"><strong>Edit constants in this file</strong> (search <code>CONFIG</code>): update <code>VESTING_START_ISO</code> when Magna’s production start is public. Magna Treasury Reserve &amp; LP vesting contract is <strong>Live</strong> on BNB Chain and holds the full 725M ONMX. Update <code>VESTING_START_ISO</code> when the authoritative schedule start is confirmed.</div>
+    </header>
+
+    <div class="grid metrics" id="metrics"></div>
+
+    <h2 class="section-title">Schedule</h2>
+    <div class="card">
+      <dl class="props" id="props"></dl>
+    </div>
+
+    <h2 class="section-title">Vesting curve</h2>
+    <p class="caption">Hover (or drag on touch) any point — tooltip shows date + exact vested ONMX. Dashed line is now.</p>
+    <div class="card chart-wrap">
+      <canvas id="curve" width="1080" height="420"></canvas>
+      <div class="tooltip" id="tooltip">
+        <div class="date" id="tipDate"></div>
+        <div class="amt" id="tipAmt"></div>
+        <div class="pct" id="tipPct"></div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Tranche breakdown</h2>
+    <div class="card" style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Allocation</th>
+            <th class="num">ONMX</th>
+            <th class="num">%</th>
+            <th>Structure</th>
+            <th>Magna status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Treasury Reserve &amp; LP</td>
+            <td class="num">725,000,000</td>
+            <td class="num">72.5%</td>
+            <td>8-year linear</td>
+            <td><span class="status" style="background:rgba(34,211,238,.12);color:#22d3ee">Live · 725M on Maga</span></td>
+          </tr>
+          <tr>
+            <td>Team &amp; Advisors</td>
+            <td class="num">50,000,000</td>
+            <td class="num">5.0%</td>
+            <td>4-year linear</td>
+            <td><span class="status" style="background:rgba(34,211,238,.12);color:#22d3ee">Live · 50M on Maga</span></td>
+          </tr>
+          <tr>
+            <td>Seed</td>
+            <td class="num">25,000,000</td>
+            <td class="num">2.5%</td>
+            <td>6-month cliff + 18-month linear</td>
+            <td><span class="status" style="background:rgba(34,211,238,.12);color:#22d3ee">Live</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="section-title">Verify yourself</h2>
+    <div class="links">
+      <a href="https://onchainmatrix.gitbook.io/onchain-matrix/tokenomics/vesting-magna-powered-by-kraken" target="_blank" rel="noopener"><div class="site">GitBook</div>Vesting: Magna powered by Kraken</a>
+      <a href="https://onchainmatrix.gitbook.io/onchain-matrix/resources/deployments-and-contract-addresses" target="_blank" rel="noopener"><div class="site">GitBook</div>Deployments &amp; contract addresses</a>
+      <a href="https://bscscan.com/address/0x3B76052ee5f726FE1daC596e9ad4ea6C76E26520" target="_blank" rel="noopener"><div class="site">BscScan</div>Magna Treasury Reserve &amp; LP vesting (725M)</a>
+      <a href="https://bscscan.com/token/0x0D60CC169b26be7fCcf0dEcB3B1Ee337fc5cbE5C" target="_blank" rel="noopener"><div class="site">BscScan</div>ONMX token</a>
+      <a href="https://bscscan.com/address/0xC7DE7F659316D19602005020B944089dac58423a" target="_blank" rel="noopener"><div class="site">BscScan</div>Treasury address</a>
+    </div>
+
+    <footer>
+      Source of truth: live Magna production contracts and on-chain state first, then official Onchain Matrix GitBook.<br />
+      This page is a static schedule representation for public sharing (GitHub Pages).
+    </footer>
+  </div>
+
+  <script>
+  /* ===================== CONFIG — edit these lines ===================== */
+  const VESTING_START_ISO = "2026-11-01T00:00:00.000Z"; // UPDATE when Magna schedule start is confirmed on-chain
+  const VESTING_YEARS = 8;                               // 8-year linear
+  const TREASURY_RESERVE = 725_000_000;                  // 72.5% allocation
+  const TOKEN = "0x0D60CC169b26be7fCcf0dEcB3B1Ee337fc5cbE5C";
+  const TREASURY = "0xC7DE7F659316D19602005020B944089dac58423a"; // published treasury address
+  const MAGNA_TREASURY_VESTING = "0x3B76052ee5f726FE1daC596e9ad4ea6C76E26520"; // Live Maga TR&LP
+  const MAGNA_TEAM_VESTING = "0xbda58E0FAb5f57b4fde9dbB46057fd4c02696062"; // Live Maga Team
+  const MAGNA_SEED_VESTING = "0x7658E0A72ef50B319e99841f2b501C8013019B1d"; // Live Maga Seed
+  const MAGNA_TREASURY_BALANCE = 725_000_000;            // ONMX held in Maga TR&LP contract (BscScan)
+  const TREASURY_WALLET_BALANCE = 0;                     // published treasury wallet snapshot
+  const CURVE_POINTS = 96;                               // samples along the curve
+  /* ==================================================================== */
+
+  const MS_DAY = 86_400_000;
+
+  function fmt(n) {
+    return Math.round(n).toLocaleString("en-US");
+  }
+  function fmtCompact(n) {
+    if (n >= 1e9) return (n / 1e9).toFixed(2) + "B";
+    if (n >= 1e6) return (n / 1e6).toFixed(2) + "M";
+    if (n >= 1e3) return (n / 1e3).toFixed(1) + "K";
+    return String(Math.round(n));
+  }
+  function formatDateUTC(d) {
+    return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }) + " UTC";
+  }
+  function clamp01(x) { return Math.max(0, Math.min(1, x)); }
+
+  const start = new Date(VESTING_START_ISO);
+  const end = new Date(VESTING_START_ISO);
+  end.setUTCFullYear(end.getUTCFullYear() + VESTING_YEARS);
+  const now = new Date();
+
+  function vestedAt(tDate) {
+    const x = tDate.getTime();
+    if (x <= start.getTime()) return 0;
+    if (x >= end.getTime()) return TREASURY_RESERVE;
+    return TREASURY_RESERVE * ((x - start.getTime()) / (end.getTime() - start.getTime()));
+  }
+
+  const nowVested = vestedAt(now);
+  const remaining = TREASURY_RESERVE - nowVested;
+  const pct = (nowVested / TREASURY_RESERVE) * 100;
+  const untilStart = start.getTime() - now.getTime();
+  const started = untilStart <= 0;
+  const untilEnd = end.getTime() - now.getTime();
+  const cdDays = Math.floor(Math.abs(untilEnd) / MS_DAY);
+  const cdHours = Math.floor((Math.abs(untilEnd) % MS_DAY) / 3_600_000);
+  const cdMins = Math.floor((Math.abs(untilEnd) % 3_600_000) / 60_000);
+
+  const metrics = document.getElementById("metrics");
+  const metricData = [
+    {
+      value: started ? (cdDays + "d") : (Math.floor(untilStart / MS_DAY) + "d"),
+      label: started ? (untilEnd > 0 ? "Until full unlock" : "Past full unlock") : "Until vesting start",
+      detail: started ? (cdHours + "h " + cdMins + "m · ends " + formatDateUTC(end)) : formatDateUTC(start),
+    },
+    { value: fmt(nowVested), label: "Vested (schedule)", detail: pct.toFixed(2) + "% of 725M · linear" },
+    { value: fmt(remaining), label: "Still restricted", detail: "725M − schedule vested" },
+    { value: fmt(MAGNA_TREASURY_BALANCE), label: "On Maga vesting contract", detail: "Live TR&LP · BNB Chain" },
+  ];
+  metrics.innerHTML = metricData.map(m =>
+    `<div class="card metric"><div class="label">${m.label}</div><div class="value">${m.value}</div><div class="detail">${m.detail}</div></div>`
+  ).join("");
+
+  document.getElementById("props").innerHTML = [
+    ["Allocation", "Treasury Reserve &amp; LP"],
+    ["Structure", "8-year linear vesting via Magna, powered by Kraken"],
+    ["Schedule start", formatDateUTC(start)],
+    ["Full unlock", formatDateUTC(end)],
+    ["Magna TR&LP vesting", "<code>" + MAGNA_TREASURY_VESTING + "</code>"],
+    ["Magna balance", fmt(MAGNA_TREASURY_BALANCE) + " ONMX (live)"],
+    ["ONMX token", "<code>" + TOKEN + "</code>"],
+    ["Treasury address", "<code>" + TREASURY + "</code>"],
+  ].map(([k,v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("");
+
+  // ---- Interactive vesting curve with hover tooltips ----
+  const canvas = document.getElementById("curve");
+  const ctx = canvas.getContext("2d");
+  const tip = document.getElementById("tooltip");
+  const tipDate = document.getElementById("tipDate");
+  const tipAmt = document.getElementById("tipAmt");
+  const tipPct = document.getElementById("tipPct");
+  const wrap = canvas.parentElement;
+
+  const points = [];
+  for (let i = 0; i <= CURVE_POINTS; i++) {
+    const t = i / CURVE_POINTS;
+    const date = new Date(start.getTime() + (end.getTime() - start.getTime()) * t);
+    points.push({ t, date, vested: TREASURY_RESERVE * t });
+  }
+  const nowT = clamp01((now.getTime() - start.getTime()) / (end.getTime() - start.getTime()));
+
+  function layout() {
+    const cssW = wrap.clientWidth - 32; // card padding approx handled by canvas width attr scaling
+    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    const w = Math.max(320, Math.floor(wrap.clientWidth - 2));
+    const h = 420;
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { w, h };
+  }
+
+  let hoverIdx = null;
+
+  function draw() {
+    const { w, h } = layout();
+    const padL = 64, padR = 20, padT = 24, padB = 48;
+    const innerW = w - padL - padR;
+    const innerH = h - padT - padB;
+    const xAt = (t) => padL + t * innerW;
+    const yAt = (v) => padT + innerH - (v / TREASURY_RESERVE) * innerH;
+
+    ctx.clearRect(0, 0, w, h);
+
+    // grid
+    ctx.strokeStyle = "rgba(255,255,255,0.08)";
+    ctx.fillStyle = "#9bb0cc";
+    ctx.font = "12px " + getComputedStyle(document.body).fontFamily;
+    ctx.lineWidth = 1;
+    [0, 0.25, 0.5, 0.75, 1].forEach((f) => {
+      const y = yAt(TREASURY_RESERVE * f);
+      ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(w - padR, y); ctx.stroke();
+      ctx.textAlign = "right";
+      ctx.fillText(fmtCompact(TREASURY_RESERVE * f), padL - 8, y + 4);
+    });
+    [0, 0.25, 0.5, 0.75, 1].forEach((f) => {
+      const p = points[Math.round(f * CURVE_POINTS)];
+      ctx.textAlign = "center";
+      ctx.fillText(p.date.toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" }), xAt(p.t), h - 16);
+    });
+
+    // area
+    ctx.beginPath();
+    points.forEach((p, i) => {
+      const x = xAt(p.t), y = yAt(p.vested);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.lineTo(xAt(1), yAt(0));
+    ctx.lineTo(xAt(0), yAt(0));
+    ctx.closePath();
+    ctx.fillStyle = "rgba(34,211,238,0.16)";
+    ctx.fill();
+
+    // line
+    ctx.beginPath();
+    points.forEach((p, i) => {
+      const x = xAt(p.t), y = yAt(p.vested);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.strokeStyle = "#22d3ee";
+    ctx.lineWidth = 3;
+    ctx.lineJoin = "round";
+    ctx.stroke();
+
+    // now marker
+    const nx = xAt(nowT), ny = yAt(nowVested);
+    ctx.setLineDash([5, 5]);
+    ctx.strokeStyle = "#a78bfa";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(nx, padT); ctx.lineTo(nx, padT + innerH); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = "#a78bfa";
+    ctx.beginPath(); ctx.arc(nx, ny, 5, 0, Math.PI * 2); ctx.fill();
+
+    if (hoverIdx != null) {
+      const p = points[hoverIdx];
+      const hx = xAt(p.t), hy = yAt(p.vested);
+      ctx.setLineDash([3, 3]);
+      ctx.strokeStyle = "rgba(34,211,238,0.55)";
+      ctx.beginPath(); ctx.moveTo(hx, padT); ctx.lineTo(hx, padT + innerH); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = "#070f1c";
+      ctx.strokeStyle = "#22d3ee";
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(hx, hy, 7, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+
+      tip.style.display = "block";
+      tipDate.textContent = formatDateUTC(p.date);
+      tipAmt.textContent = fmt(p.vested) + " ONMX vested";
+      tipPct.textContent = (p.t * 100).toFixed(1) + "% of 725M · linear";
+      const tipW = tip.offsetWidth || 180;
+      const tipH = tip.offsetHeight || 70;
+      let left = hx - tipW / 2;
+      left = Math.max(8, Math.min(left, w - tipW - 8));
+      let top = hy - tipH - 14;
+      if (top < 8) top = hy + 14;
+      tip.style.left = left + "px";
+      tip.style.top = top + "px";
+    } else {
+      tip.style.display = "none";
+    }
+
+    // stash for hit-testing
+    canvas._geom = { padL, padR, padT, padB, innerW, innerH, w, h };
+  }
+
+  function idxFromClientX(clientX) {
+    const rect = canvas.getBoundingClientRect();
+    const g = canvas._geom;
+    if (!g) return 0;
+    const x = ((clientX - rect.left) / rect.width) * g.w;
+    const rel = clamp01((x - g.padL) / g.innerW);
+    return Math.round(rel * CURVE_POINTS);
+  }
+
+  function onPointer(clientX) {
+    hoverIdx = idxFromClientX(clientX);
+    draw();
+  }
+
+  canvas.addEventListener("mousemove", (e) => onPointer(e.clientX));
+  canvas.addEventListener("mouseleave", () => { hoverIdx = null; draw(); });
+  canvas.addEventListener("touchstart", (e) => { if (e.touches[0]) onPointer(e.touches[0].clientX); }, { passive: true });
+  canvas.addEventListener("touchmove", (e) => { if (e.touches[0]) onPointer(e.touches[0].clientX); }, { passive: true });
+  canvas.addEventListener("touchend", () => { /* keep last tip briefly */ });
+
+  window.addEventListener("resize", draw);
+  draw();
+  </script>
+</body>
+</html>
