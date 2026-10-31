@@ -197,14 +197,14 @@
 
     <!-- TREASURY -->
     <section class="panel active" id="panel-treasury" role="tabpanel" aria-labelledby="tab-treasury">
-      <div class="note">Treasury Reserve &amp; LP vesting started <strong>30 Oct 2026, 8:00 PM ET</strong> and runs linearly for 8 years. The flow <strong>stops at final unlock on 30 Oct 2034, 8:00 PM ET</strong> — no tokens vest after that date.</div>
+      <div class="note">Treasury Reserve &amp; LP vesting started <strong>30 Oct 2026, 1:00 PM ET</strong> and runs linearly for 8 years. The flow <strong>stops at final unlock on 30 Oct 2034, 1:00 PM ET</strong> — no tokens vest after that date. Schedule start = onchain funding arrival of 725,000,000 ONMX (BscScan tx <a href="https://bscscan.com/tx/0xb19a94af81cf4cad62645d04abe38189234d299f3b5a80c0225517121eef38d6" target="_blank" rel="noopener">0xb19a94af…</a>, 30 Oct 2026 1:00:52 PM ET).</div>
       <div class="grid metrics" id="metrics-treasury"></div>
 
       <h2 class="section-title">Schedule</h2>
       <div class="card"><dl class="props" id="props-treasury"></dl></div>
 
       <h2 class="section-title">Vesting curve</h2>
-      <p class="caption">Hover (or drag on touch) for date + exact vested ONMX. Dashed line is now. Curve ends at 30 Oct 2034, 8:00 PM ET.</p>
+      <p class="caption">Hover (or drag on touch) for date + exact vested ONMX. Dashed line is now. Curve ends at 30 Oct 2034, 1:00 PM ET.</p>
       <div class="card chart-wrap">
         <canvas class="curve" id="curve-treasury" width="1080" height="440"></canvas>
         <div class="tooltip" id="tip-treasury">
@@ -231,7 +231,7 @@
               <td>Treasury Reserve &amp; LP</td>
               <td class="num">725,000,000</td>
               <td class="num">72.5%</td>
-              <td>Linear over 8 years<br /><span style="color:var(--muted);font-size:12px">30 Oct 2026, 8:00 PM ET → 30 Oct 2034, 8:00 PM ET</span></td>
+              <td>Linear over 8 years<br /><span style="color:var(--muted);font-size:12px">30 Oct 2026, 1:00 PM ET → 30 Oct 2034, 1:00 PM ET</span></td>
               <td><span class="status">Still restricted</span></td>
             </tr>
           </tbody>
@@ -266,7 +266,7 @@
 
     <!-- TEAM -->
     <section class="panel" id="panel-team" role="tabpanel" aria-labelledby="tab-team" hidden>
-      <div class="note">Team &amp; Advisors vesting started <strong>30 Oct 2026, 8:00 PM ET</strong>: <strong>6-month cliff</strong>, then <strong>42-month linear</strong> (4 years total). Final unlock <strong>30 Oct 2030, 8:00 PM ET</strong> — vesting flow stops there.</div>
+      <div class="note">Team &amp; Advisors vesting started <strong>30 Oct 2026, 12:47 PM ET</strong>: <strong>6-month cliff</strong>, then <strong>42-month linear</strong> (4 years total). Final unlock <strong>30 Oct 2030, 12:47 PM ET</strong> — vesting flow stops there. Schedule start = onchain funding arrival of 50,000,000 ONMX (BscScan tx <a href="https://bscscan.com/tx/0x0c0e7b31073f86768e46ad3be5265d9eacffcd29c7baab73e32c496046d68a1b" target="_blank" rel="noopener">0x0c0e7b31…</a>, 30 Oct 2026 12:47:31 PM ET).</div>
       <div class="grid metrics" id="metrics-team"></div>
       <h2 class="section-title">Schedule</h2>
       <div class="card"><dl class="props" id="props-team"></dl></div>
@@ -289,7 +289,7 @@
               <td>Team &amp; Advisors</td>
               <td class="num">50,000,000</td>
               <td class="num">5.0%</td>
-              <td>4-year: 6-month cliff + 42-month linear via Magna<br /><span style="color:var(--muted);font-size:12px">30 Oct 2026, 8:00 PM ET → 30 Oct 2030, 8:00 PM ET</span></td>
+              <td>4-year: 6-month cliff + 42-month linear via Magna<br /><span style="color:var(--muted);font-size:12px">30 Oct 2026, 12:47 PM ET → 30 Oct 2030, 12:47 PM ET</span></td>
               <td><span class="status">Still restricted · in cliff</span></td>
             </tr>
           </tbody>
@@ -312,13 +312,13 @@
 
   const TR = {
     amount: 725_000_000,
-    startISO: "2026-10-31T00:00:00.000Z",
+    startISO: "2026-10-30T17:00:52.000Z",
     years: 8,
     scBalance: 725_000_000,
   };
   const TEAM = {
     amount: 50_000_000,
-    startISO: "2026-10-31T00:00:00.000Z",
+    startISO: "2026-10-30T16:47:31.000Z",
     cliffMonths: 6,
     linearMonths: 42,
     scBalance: 50_000_000,
