@@ -197,14 +197,14 @@
 
     <!-- TREASURY -->
     <section class="panel active" id="panel-treasury" role="tabpanel" aria-labelledby="tab-treasury">
-      <div class="note">Treasury Reserve &amp; LP vesting started <strong>31 Oct 2026</strong> and runs linearly for 8 years. The flow <strong>stops at final unlock on 31 Oct 2034</strong> — no tokens vest after that date.</div>
+      <div class="note">Treasury Reserve &amp; LP vesting started <strong>30 Oct 2026, 8:00 PM ET</strong> and runs linearly for 8 years. The flow <strong>stops at final unlock on 30 Oct 2034, 8:00 PM ET</strong> — no tokens vest after that date.</div>
       <div class="grid metrics" id="metrics-treasury"></div>
 
       <h2 class="section-title">Schedule</h2>
       <div class="card"><dl class="props" id="props-treasury"></dl></div>
 
       <h2 class="section-title">Vesting curve</h2>
-      <p class="caption">Hover (or drag on touch) for date + exact vested ONMX. Dashed line is now. Curve ends at 31 Oct 2034.</p>
+      <p class="caption">Hover (or drag on touch) for date + exact vested ONMX. Dashed line is now. Curve ends at 30 Oct 2034, 8:00 PM ET.</p>
       <div class="card chart-wrap">
         <canvas class="curve" id="curve-treasury" width="1080" height="440"></canvas>
         <div class="tooltip" id="tip-treasury">
@@ -231,7 +231,7 @@
               <td>Treasury Reserve &amp; LP</td>
               <td class="num">725,000,000</td>
               <td class="num">72.5%</td>
-              <td>Linear over 8 years<br /><span style="color:var(--muted);font-size:12px">31 Oct 2026 → 31 Oct 2034</span></td>
+              <td>Linear over 8 years<br /><span style="color:var(--muted);font-size:12px">30 Oct 2026, 8:00 PM ET → 30 Oct 2034, 8:00 PM ET</span></td>
               <td><span class="status">Still restricted</span></td>
             </tr>
           </tbody>
@@ -241,7 +241,7 @@
 
     <!-- SEED -->
     <section class="panel" id="panel-seed" role="tabpanel" aria-labelledby="tab-seed" hidden>
-      <div class="note">Seed opens <strong>Monday 2 Nov 2026</strong>. Each participant’s <strong>6-month cliff + 18-month linear</strong> vesting starts at <strong>purchase</strong>. Monthly claim availability after the cliff (per GitBook). Aggregate vested totals stay purchase-dependent.</div>
+      <div class="note">Seed opens <strong>Sunday 1 Nov 2026, 7:00 PM ET</strong>. Each participant’s <strong>6-month cliff + 18-month linear</strong> vesting starts at <strong>purchase</strong>. Monthly claim availability after the cliff (per GitBook). Aggregate vested totals stay purchase-dependent.</div>
       <div class="grid metrics" id="metrics-seed"></div>
       <h2 class="section-title">Schedule</h2>
       <div class="card"><dl class="props" id="props-seed"></dl>
@@ -256,7 +256,7 @@
               <td>Seed</td>
               <td class="num">25,000,000</td>
               <td class="num">2.5%</td>
-              <td>6-month cliff + 18-month linear via Magna<br /><span style="color:var(--muted);font-size:12px">Starts at purchase · Seed opens 2 Nov 2026</span></td>
+              <td>6-month cliff + 18-month linear via Magna<br /><span style="color:var(--muted);font-size:12px">Starts at purchase · Seed opens 1 Nov 2026, 7:00 PM ET</span></td>
               <td><span class="status tbd">Opens Monday · still restricted until unlocks</span></td>
             </tr>
           </tbody>
@@ -266,7 +266,7 @@
 
     <!-- TEAM -->
     <section class="panel" id="panel-team" role="tabpanel" aria-labelledby="tab-team" hidden>
-      <div class="note">Team &amp; Advisors vesting started <strong>31 Oct 2026</strong>: <strong>6-month cliff</strong>, then <strong>42-month linear</strong> (4 years total). Final unlock <strong>31 Oct 2030</strong> — vesting flow stops there.</div>
+      <div class="note">Team &amp; Advisors vesting started <strong>30 Oct 2026, 8:00 PM ET</strong>: <strong>6-month cliff</strong>, then <strong>42-month linear</strong> (4 years total). Final unlock <strong>30 Oct 2030, 8:00 PM ET</strong> — vesting flow stops there.</div>
       <div class="grid metrics" id="metrics-team"></div>
       <h2 class="section-title">Schedule</h2>
       <div class="card"><dl class="props" id="props-team"></dl></div>
@@ -289,7 +289,7 @@
               <td>Team &amp; Advisors</td>
               <td class="num">50,000,000</td>
               <td class="num">5.0%</td>
-              <td>4-year: 6-month cliff + 42-month linear via Magna<br /><span style="color:var(--muted);font-size:12px">31 Oct 2026 → 31 Oct 2030</span></td>
+              <td>4-year: 6-month cliff + 42-month linear via Magna<br /><span style="color:var(--muted);font-size:12px">30 Oct 2026, 8:00 PM ET → 30 Oct 2030, 8:00 PM ET</span></td>
               <td><span class="status">Still restricted · in cliff</span></td>
             </tr>
           </tbody>
@@ -341,14 +341,22 @@
     if (n >= 1e3) return (n / 1e3).toFixed(1) + "K";
     return String(Math.round(n));
   }
-  function formatDateUTC(d) {
-    return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }) + " UTC";
+  const ET_FMT = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit", hour12: true, timeZone: "America/New_York" });
+  const ET_DATE_FMT = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "America/New_York" });
+  const ET_HM = new Intl.DateTimeFormat("en-US", { hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZone: "America/New_York" });
+  // Human-facing dates in US Eastern; underlying instants stay UTC.
+  function formatDateET(d) {
+    if (ET_HM.format(d) === "00:00") return ET_DATE_FMT.format(d) + " ET";
+    return ET_FMT.format(d).replace(/\s*(am|pm)$/i, (m, x) => " " + x.toUpperCase()) + " ET";
   }
   function clamp01(x) { return Math.max(0, Math.min(1, x)); }
   function shortAddr(a) { return a.slice(0, 6) + "…" + a.slice(-4); }
   function bsc(a) { return "https://bscscan.com/address/" + a; }
   function addMonthsApprox(d, months) {
-    return new Date(d.getTime() + months * MS_MONTH);
+    // Real calendar months from the UTC anchor (was 30.44-day approx).
+    const r = new Date(d.getTime());
+    r.setUTCMonth(r.getUTCMonth() + months);
+    return r;
   }
 
   function addrRow(address) {
@@ -390,7 +398,7 @@
   const trMins = Math.floor((Math.abs(trUntil) % 3_600_000) / 60_000);
 
   document.getElementById("metrics-treasury").innerHTML = [
-    { value: trPast ? "Complete" : (trDays + "d"), label: trPast ? "Schedule status" : "Until final unlock", detail: trPast ? ("Ended " + formatDateUTC(trEnd)) : (trHours + "h " + trMins + "m · 31 Oct 2034") },
+    { value: trPast ? "Complete" : (trDays + "d"), label: trPast ? "Schedule status" : "Until final unlock", detail: trPast ? ("Ended " + formatDateET(trEnd)) : (trHours + "h " + trMins + "m · " + formatDateET(trEnd)) },
     { value: fmt(trNow), label: "Vested (schedule)", detail: trPct.toFixed(2) + "% of allocation · linear" },
     { value: fmt(trRem), label: "Still restricted", detail: "Allocation − schedule vested" },
     { value: fmt(TR.scBalance), label: "On vesting smart contract", detail: "Live balance · BNB Chain" },
@@ -399,8 +407,8 @@
   document.getElementById("props-treasury").innerHTML = [
     ["Allocation", "Treasury Reserve &amp; LP · 725,000,000 ONMX (72.5%)"],
     ["Structure", "8-year linear vesting via Magna, powered by Kraken"],
-    ["Schedule start", formatDateUTC(trStart)],
-    ["Final unlock", formatDateUTC(trEnd) + " · vesting flow stops here"],
+    ["Schedule start", formatDateET(trStart)],
+    ["Final unlock", formatDateET(trEnd) + " · vesting flow stops here"],
     ["Vesting smart contract", addrRow(VESTING_SC_TREASURY)],
     ["ONMX token", addrRow(TOKEN)],
     ["Treasury address", addrRow(TREASURY)],
@@ -426,7 +434,7 @@
   const teamDays = Math.floor(Math.abs(teamUntil) / MS_DAY);
 
   document.getElementById("metrics-team").innerHTML = [
-    { value: inCliff ? (cliffDays + "d") : (teamDays + "d"), label: inCliff ? "Until cliff ends" : "Until final unlock", detail: inCliff ? ("Cliff ends " + formatDateUTC(teamCliffEnd)) : formatDateUTC(teamEnd) },
+    { value: inCliff ? (cliffDays + "d") : (teamDays + "d"), label: inCliff ? "Until cliff ends" : "Until final unlock", detail: inCliff ? ("Cliff ends " + formatDateET(teamCliffEnd)) : formatDateET(teamEnd) },
     { value: fmt(teamNow), label: "Vested (schedule)", detail: teamPct.toFixed(2) + "% · " + (inCliff ? "still in cliff" : "post-cliff linear") },
     { value: fmt(teamRem), label: "Still restricted", detail: "Allocation − schedule vested" },
     { value: fmt(TEAM.scBalance), label: "On vesting smart contract", detail: "Live balance · BNB Chain" },
@@ -435,9 +443,9 @@
   document.getElementById("props-team").innerHTML = [
     ["Allocation", "Team &amp; Advisors · 50,000,000 ONMX (5.0%)"],
     ["Structure", "4-year: 6-month cliff + 42-month linear via Magna"],
-    ["Schedule start", formatDateUTC(teamStart)],
-    ["Cliff ends", formatDateUTC(teamCliffEnd)],
-    ["Final unlock", formatDateUTC(teamEnd) + " · vesting flow stops here"],
+    ["Schedule start", formatDateET(teamStart)],
+    ["Cliff ends", formatDateET(teamCliffEnd)],
+    ["Final unlock", formatDateET(teamEnd) + " · vesting flow stops here"],
     ["Vesting smart contract", addrRow(VESTING_SC_TEAM)],
     ["ONMX token", addrRow(TOKEN)],
   ].map(([k,v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("");
@@ -450,7 +458,7 @@
   const openDays = Math.max(0, Math.ceil(untilOpen / MS_DAY));
 
   document.getElementById("metrics-seed").innerHTML = [
-    { value: untilOpen > 0 ? (openDays + "d") : "Open", label: untilOpen > 0 ? "Until Seed opens" : "Seed status", detail: formatDateUTC(seedOpen) + " · Monday" },
+    { value: untilOpen > 0 ? (openDays + "d") : "Open", label: untilOpen > 0 ? "Until Seed opens" : "Seed status", detail: formatDateET(seedOpen) + " · Sunday" },
     { value: "25,000,000", label: "Allocation", detail: "2.5% of max supply" },
     { value: "Cliff + linear", label: "Structure", detail: "6-month cliff → 18-month linear" },
     { value: "At purchase", label: "Clock starts", detail: "Each buyer’s cliff begins at purchase" },
@@ -459,9 +467,9 @@
   document.getElementById("props-seed").innerHTML = [
     ["Allocation", "Seed · 25,000,000 ONMX (2.5%)"],
     ["Structure", "6-month cliff + 18-month linear via Magna · monthly claims after cliff"],
-    ["Seed opens", formatDateUTC(seedOpen) + " (Monday)"],
+    ["Seed opens", formatDateET(seedOpen) + " (Sunday)"],
     ["Vesting clock", "Starts at purchase for each participant"],
-    ["Example if purchase at open", "Cliff ends " + formatDateUTC(seedExampleCliff) + " · final unlock ~ " + formatDateUTC(seedExampleEnd)],
+    ["Example if purchase at open", "Cliff ends " + formatDateET(seedExampleCliff) + " · final unlock ~ " + formatDateET(seedExampleEnd)],
     ["Vesting smart contract", addrRow(VESTING_SC_SEED)],
     ["ONMX token", addrRow(TOKEN)],
   ].map(([k,v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("");
@@ -566,7 +574,7 @@
     [0, 0.25, 0.5, 0.75, 1].forEach((f) => {
       const p = c.points[Math.round(f * CURVE_POINTS)];
       ctx.textAlign = f === 1 ? "end" : (f === 0 ? "start" : "middle");
-      ctx.fillText(p.date.toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" }), xAt(p.t), h - 22);
+      ctx.fillText(p.date.toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "America/New_York" }), xAt(p.t), h - 22);
     });
     if (c.cliffEnd) {
       const ct = clamp01((c.cliffEnd.getTime() - c.start.getTime()) / (c.end.getTime() - c.start.getTime()));
@@ -607,7 +615,7 @@
       ctx.setLineDash([]); ctx.fillStyle = "#030612"; ctx.strokeStyle = "#07E9FB"; ctx.lineWidth = 3;
       ctx.beginPath(); ctx.arc(hx, hy, 7, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
       c.tip.style.display = "block";
-      c.tipDate.textContent = formatDateUTC(p.date);
+      c.tipDate.textContent = formatDateET(p.date);
       c.tipAmt.textContent = fmt(p.vested) + " ONMX vested";
       c.tipPct.textContent = ((p.vested / c.amount) * 100).toFixed(1) + "% of allocation";
       const tipW = c.tip.offsetWidth || 180, tipH = c.tip.offsetHeight || 70;
