@@ -4,9 +4,17 @@ Public hub for Onchain Matrix locking & vesting schedules via **Magna** (powered
 
 ## Treasury Reserve & LP (725,000,000 ONMX · 72.5%)
 
-- Start: **30 Oct 2026, 8:00 PM ET** (31 Oct 2026 00:00 UTC)
-- Final unlock: **30 Oct 2034, 8:00 PM ET** (31 Oct 2034 00:00 UTC) (8-year linear; vesting flow stops here)
+- Start: **30 Oct 2026, 12:30 PM ET** (`2026-10-30T16:30:00.000Z`)
+- Final unlock: **30 Oct 2034, 12:30 PM ET** (`2034-10-30T16:30:00.000Z`) (8-year linear; vesting flow stops here)
+- Schedule clock (not the earlier funding/creation tx times).
 - Vesting smart contract: `0x3B76052ee5f726FE1daC596e9ad4ea6C76E26520`
+
+## Team & Advisors (50,000,000 ONMX)
+
+- Start: **30 Oct 2026, 12:30 PM ET** (`2026-10-30T16:30:00.000Z`)
+- Cliff ends: **30 Apr 2027, 12:30 PM ET** (`2027-04-30T16:30:00.000Z`) (6-month cliff)
+- Final unlock: **30 Oct 2030, 12:30 PM ET** (`2030-10-30T16:30:00.000Z`) (then 42-month linear; 48 months total)
+- Schedule clock (not the earlier funding/creation tx times).
 
 Live page is the public schedule source; this README mirrors `index.html`.
 
