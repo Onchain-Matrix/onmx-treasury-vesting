@@ -46,14 +46,13 @@
     .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 18px 64px; }
     header { text-align: center; margin-bottom: 18px; }
     .brand {
-      display: inline-flex; align-items: center; gap: 12px;
-      margin-bottom: 14px; text-decoration: none; color: var(--text);
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 16px; text-decoration: none; color: var(--text);
     }
-    .brand img { width: 48px; height: 48px; object-fit: contain; filter: drop-shadow(0 0 18px rgba(7,233,251,.35)); }
-    .brand-name {
-      font-family: var(--display); font-weight: 700; letter-spacing: .06em;
-      font-size: 14px; text-transform: uppercase;
-      background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+    .brand-logo {
+      height: 56px; width: auto; max-width: min(320px, 72vw);
+      object-fit: contain; display: block;
+      filter: drop-shadow(0 0 18px rgba(7,233,251,.28));
     }
     .pill {
       display: inline-flex; gap: 8px; padding: 8px 14px; border-radius: 999px;
@@ -176,8 +175,7 @@
   <div class="wrap">
     <header>
       <a class="brand" href="https://onchainmatrix.com" target="_blank" rel="noopener">
-        <img src="assets/om-brand.png" alt="Onchain Matrix" width="48" height="48" />
-        <span class="brand-name">Onchain Matrix</span>
+        <img class="brand-logo" src="assets/om-logo-header.png" alt="Onchain Matrix" width="277" height="64" />
       </a>
       <div class="pill">ONMX · Magna powered by Kraken · BNB Chain</div>
       <h1>Onchain Matrix — Locking &amp; Vesting</h1>
