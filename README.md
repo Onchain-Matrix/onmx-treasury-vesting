@@ -1,6 +1,6 @@
-# ONMX Locking & Vesting (GitHub Pages)
+# ONMX Vesting Schedules (GitHub Pages)
 
-Public hub for Onchain Matrix locking & vesting schedules via **Magna** (powered by Kraken) on BNB Chain: **Treasury Reserve**, **Seed**, and **Team & Advisors**.
+Public reference for Onchain Matrix ONMX vesting schedules via **Magna** (powered by Kraken) on BNB Chain: **Treasury Reserve**, **Seed**, and **Team & Advisors**.
 
 ## Treasury Reserve & LP (725,000,000 ONMX · 72.5%)
 

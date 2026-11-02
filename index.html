@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Onchain Matrix — Locking &amp; Vesting</title>
-  <meta name="description" content="Onchain Matrix locking &amp; vesting hub: Treasury Reserve, Seed, and Team &amp; Advisors schedules via Magna on BNB Chain." />
+  <title>Onchain Matrix — Vesting Schedules</title>
+  <meta name="description" content="Onchain Matrix (onchainmatrix.com) — public reference for ONMX vesting schedules across Treasury Reserve, Seed, and Team &amp; Advisors, administered via Magna on BNB Chain." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet" />
@@ -14,7 +14,7 @@
       --bg1: #061126;
       --bg2: #081121;
       --card: rgba(8, 17, 33, 0.78);
-      --border: rgba(7, 233, 251, 0.22);
+      --border: rgba(7, 233, 251, 0.18);
       --border-soft: rgba(255, 255, 255, 0.08);
       --text: #F4FBFF;
       --muted: #8FA3BF;
@@ -22,14 +22,14 @@
       --blue: #5887F4;
       --violet: #8B4FF5;
       --ink: #030612;
-      --cyan-glow: rgba(7, 233, 251, 0.28);
-      --blue-glow: rgba(88, 135, 244, 0.22);
-      --violet-glow: rgba(139, 79, 245, 0.18);
-      --shadow: 0 20px 60px rgba(0,0,0,.55);
+      --cyan-glow: rgba(7, 233, 251, 0.15);
+      --blue-glow: rgba(88, 135, 244, 0.12);
+      --violet-glow: rgba(139, 79, 245, 0.09);
+      --shadow: 0 6px 20px rgba(0,0,0,.35);
       --font: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       --display: "Orbitron", Inter, ui-sans-serif, system-ui, sans-serif;
       --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      --radius: 18px;
+      --radius: 12px;
       --grad: linear-gradient(90deg, #07E9FB, #236CFF, #8B4FF5);
       --grad-br: linear-gradient(135deg, #07E9FB, #8B4FF5);
     }
@@ -52,20 +52,19 @@
     .brand-logo {
       height: 56px; width: auto; max-width: min(320px, 72vw);
       object-fit: contain; display: block;
-      filter: drop-shadow(0 0 18px rgba(7,233,251,.28));
+      filter: drop-shadow(0 0 6px rgba(7,233,251,.10));
     }
     .pill {
-      display: inline-flex; gap: 8px; padding: 8px 14px; border-radius: 999px;
-      border: 1px solid var(--border); background: rgba(7,233,251,.06);
-      color: var(--cyan); font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+      display: block; padding: 0; color: var(--muted);
+      font-size: 12px; font-weight: 500; letter-spacing: .02em;
     }
     h1 {
       font-family: var(--display);
       font-size: clamp(1.45rem, 3vw, 2.15rem);
       margin: 14px 0 8px; font-weight: 800; letter-spacing: .02em; line-height: 1.2;
-      background: linear-gradient(90deg, #fff, #07E9FB 55%, #8B4FF5);
-      -webkit-background-clip: text; background-clip: text; color: transparent;
+      color: #F4FBFF; font-weight: 700;
     }
+    h1 .accent { color: var(--cyan); }
     .sub { color: var(--muted); max-width: 740px; margin: 0 auto; line-height: 1.55; font-size: 15px; }
     .verify {
       display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
@@ -73,28 +72,32 @@
     }
     .verify a {
       text-decoration: none; color: var(--text); font-size: 12px; font-weight: 600;
-      padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border-soft);
+      padding: 7px 12px; border-radius: 6px; border: 1px solid var(--border-soft);
       background: rgba(6,17,38,.72);
     }
     .verify a:hover { border-color: var(--border); color: var(--cyan); }
     .note {
       margin: 14px auto 0; max-width: 900px;
-      border: 1px solid var(--border); background: rgba(7,233,251,.06);
-      color: #C9FFF4; border-radius: 14px; padding: 12px 14px; font-size: 14px; line-height: 1.5;
+      border: 1px solid var(--border-soft); border-left: 3px solid var(--cyan);
+      background: rgba(8,17,33,.6);
+      color: #D6E2F0; border-radius: 6px; padding: 12px 16px; font-size: 14px; line-height: 1.6;
     }
+    .note a { color: var(--cyan); }
     .tabs {
       display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
-      margin: 22px auto 8px; padding: 6px; border-radius: 999px;
+      margin: 22px auto 8px; padding: 4px; border-radius: 10px;
       background: rgba(3,6,18,.55); border: 1px solid var(--border-soft);
       width: fit-content; max-width: 100%;
     }
     .tab {
       appearance: none; border: 0; cursor: pointer; font: inherit; font-weight: 700; font-size: 13px;
-      color: var(--muted); background: transparent; padding: 10px 16px; border-radius: 999px;
+      color: var(--muted); background: transparent; padding: 9px 16px; border-radius: 7px;
+      border: 1px solid transparent;
     }
+    .tab:hover { color: var(--text); }
     .tab[aria-selected="true"] {
-      color: var(--ink); background: var(--grad-br);
-      box-shadow: 0 0 22px var(--cyan-glow);
+      color: var(--text); background: rgba(7,233,251,.08);
+      border-color: rgba(7,233,251,.55);
     }
     .panel { display: none; margin-top: 14px; }
     .panel.active { display: block; }
@@ -104,27 +107,26 @@
     @media (max-width: 560px) { .metrics { grid-template-columns: 1fr; } }
     .card {
       background: var(--card); border: 1px solid var(--border-soft); border-radius: var(--radius);
-      padding: 18px 16px 16px; box-shadow: var(--shadow); backdrop-filter: blur(14px); position: relative; overflow: hidden;
+      padding: 18px 16px 16px; box-shadow: var(--shadow); backdrop-filter: blur(8px); position: relative; overflow: hidden;
     }
     .card::before {
       content: ""; position: absolute; inset: 0 0 auto 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(7,233,251,.5), rgba(139,79,245,.35), transparent);
+      background: linear-gradient(90deg, transparent, rgba(7,233,251,.22), transparent);
     }
     .metric .label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; font-weight: 600; }
     .metric .value {
-      font-size: 1.35rem; font-weight: 800; margin-top: 8px; letter-spacing: -.02em;
-      background: linear-gradient(90deg, #fff, var(--cyan));
-      -webkit-background-clip: text; background-clip: text; color: transparent;
+      font-size: 1.3rem; font-weight: 700; margin-top: 8px; letter-spacing: -.01em;
+      color: #F4FBFF; font-variant-numeric: tabular-nums;
     }
     .metric .detail { color: var(--muted); font-size: 12px; margin-top: 6px; line-height: 1.4; }
     .section-title {
       margin: 28px 0 10px; font-size: 1.05rem; font-weight: 700;
       display: flex; align-items: center; gap: 10px;
-      font-family: var(--display); letter-spacing: .04em;
+      font-family: var(--display); letter-spacing: .03em; font-size: .95rem; text-transform: uppercase; color: #DCE7F3;
     }
     .section-title::before {
-      content: ""; width: 8px; height: 8px; border-radius: 50%;
-      background: var(--cyan); box-shadow: 0 0 14px var(--cyan-glow);
+      content: ""; width: 3px; height: 14px; border-radius: 1px;
+      background: var(--cyan);
     }
     .caption { color: var(--muted); font-size: 13px; margin: -2px 0 12px; }
     .props { display: grid; grid-template-columns: 200px 1fr; gap: 12px 14px; font-size: 14px; align-items: start; }
@@ -158,17 +160,18 @@
     th { color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
     td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
     .status {
-      display: inline-block; padding: 3px 9px; border-radius: 999px;
-      background: rgba(7,233,251,.1); color: var(--cyan); font-size: 12px; font-weight: 600;
-      border: 1px solid rgba(7,233,251,.25);
+      display: inline-block; padding: 2px 8px; border-radius: 4px;
+      background: transparent; color: #CFE3F2; font-size: 12px; font-weight: 600;
+      border: 1px solid rgba(255,255,255,.18);
     }
-    .status.tbd { color: #FDE68A; background: rgba(251,191,36,.1); border-color: rgba(251,191,36,.28); }
+    .status.tbd { color: #E8D9A8; border-color: rgba(232,217,168,.3); }
     .estimate {
       margin-top: 10px; font-size: 13px; color: var(--muted); line-height: 1.45;
       border-left: 2px solid rgba(7,233,251,.35); padding-left: 10px;
     }
-    footer { margin-top: 34px; color: var(--muted); font-size: 12px; text-align: center; line-height: 1.6; }
-    footer a { color: var(--cyan); text-decoration: none; }
+    footer { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--border-soft); color: #6F829C; font-size: 12px; text-align: center; line-height: 1.7; }
+    footer a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+    @media (max-width: 560px) { .props { grid-template-columns: 1fr; gap: 4px 0; } .props dd { margin-bottom: 10px; } .tab { padding: 8px 12px; } }
   </style>
 </head>
 <body>
@@ -177,9 +180,9 @@
       <a class="brand" href="https://onchainmatrix.com" target="_blank" rel="noopener">
         <img class="brand-logo" src="assets/om-logo-header.png" alt="Onchain Matrix" width="277" height="64" />
       </a>
-      <div class="pill">ONMX · Magna powered by Kraken · BNB Chain</div>
-      <h1>Onchain Matrix — Locking &amp; Vesting</h1>
-      <p class="sub">Public hub for ONMX locking &amp; vesting schedules. Switch sections for Treasury Reserve, Seed, and Team &amp; Advisors.</p>
+      <div class="pill">ONMX · BNB Chain · Administered via Magna, powered by Kraken</div>
+      <h1>Onchain Matrix <span class="accent">—</span> Vesting Schedules</h1>
+      <p class="sub">Public reference for ONMX vesting schedules across Treasury Reserve, Seed, and Team &amp; Advisors. Figures are derived from the onchain schedule parameters below.</p>
       <nav class="verify" aria-label="Verify">
         <a href="https://onchainmatrix.gitbook.io/onchain-matrix/tokenomics/vesting-magna-powered-by-kraken" target="_blank" rel="noopener">GitBook · Vesting</a>
         <a href="https://onchainmatrix.gitbook.io/onchain-matrix/resources/deployments-and-contract-addresses" target="_blank" rel="noopener">GitBook · Deployments</a>
@@ -197,14 +200,14 @@
 
     <!-- TREASURY -->
     <section class="panel active" id="panel-treasury" role="tabpanel" aria-labelledby="tab-treasury">
-      <div class="note">Treasury Reserve &amp; LP vesting started <strong>30 Oct 2026, 1:00 PM ET</strong> and runs linearly for 8 years. The flow <strong>stops at final unlock on 30 Oct 2034, 1:00 PM ET</strong> — no tokens vest after that date. Schedule start = onchain funding arrival of 725,000,000 ONMX (BscScan tx <a href="https://bscscan.com/tx/0xb19a94af81cf4cad62645d04abe38189234d299f3b5a80c0225517121eef38d6" target="_blank" rel="noopener">0xb19a94af…</a>, 30 Oct 2026 1:00:52 PM ET).</div>
+      <div class="note"><strong>Disclosure.</strong> The Treasury Reserve &amp; LP allocation vests linearly over 8 years from <strong>30 Oct 2026, 1:00 PM ET</strong>. Vesting <strong>ends at final unlock on 30 Oct 2034, 1:00 PM ET</strong>; no further tokens vest after that date. The schedule start is the onchain funding arrival of the allocation to the vesting smart contract (BscScan tx <a href="https://bscscan.com/tx/0xb19a94af81cf4cad62645d04abe38189234d299f3b5a80c0225517121eef38d6" target="_blank" rel="noopener">0xb19a94af…</a>, 30 Oct 2026 1:00:52 PM ET).</div>
       <div class="grid metrics" id="metrics-treasury"></div>
 
       <h2 class="section-title">Schedule</h2>
       <div class="card"><dl class="props" id="props-treasury"></dl></div>
 
       <h2 class="section-title">Vesting curve</h2>
-      <p class="caption">Hover (or drag on touch) for date + exact vested ONMX. Dashed line is now. Curve ends at 30 Oct 2034, 1:00 PM ET.</p>
+      <p class="caption">Cumulative vested ONMX by date. Hover or drag for exact values; the dashed marker indicates the current date. Curve terminates at 30 Oct 2034, 1:00 PM ET.</p>
       <div class="card chart-wrap">
         <canvas class="curve" id="curve-treasury" width="1080" height="440"></canvas>
         <div class="tooltip" id="tip-treasury">
@@ -232,7 +235,7 @@
               <td class="num">725,000,000</td>
               <td class="num">72.5%</td>
               <td>Linear over 8 years<br /><span style="color:var(--muted);font-size:12px">30 Oct 2026, 1:00 PM ET → 30 Oct 2034, 1:00 PM ET</span></td>
-              <td><span class="status">Still restricted</span></td>
+              <td><span class="status">Restricted · vesting</span></td>
             </tr>
           </tbody>
         </table>
@@ -241,11 +244,11 @@
 
     <!-- SEED -->
     <section class="panel" id="panel-seed" role="tabpanel" aria-labelledby="tab-seed" hidden>
-      <div class="note">Seed opens <strong>Sunday 1 Nov 2026, 7:00 PM ET</strong>. Each participant’s <strong>6-month cliff + 18-month linear</strong> vesting starts at <strong>purchase</strong>. Monthly claim availability after the cliff (per GitBook). Aggregate vested totals stay purchase-dependent.</div>
+      <div class="note"><strong>Disclosure.</strong> Seed opens <strong>Sunday 1 Nov 2026, 7:00 PM ET</strong>. Each participant’s <strong>6-month cliff + 18-month linear</strong> schedule begins at that participant’s <strong>purchase</strong>, with monthly claim availability after the cliff (per GitBook). Aggregate vested totals depend on individual purchase timing and are not presented.</div>
       <div class="grid metrics" id="metrics-seed"></div>
       <h2 class="section-title">Schedule</h2>
       <div class="card"><dl class="props" id="props-seed"></dl>
-        <p class="estimate">Structure from official GitBook. Cliff and linear clock begin at the buyer’s purchase timestamp — not a single shared unlock for every Seed wallet.</p>
+        <p class="estimate">Structure per official GitBook. The cliff and linear periods begin at each buyer’s purchase timestamp; there is no single shared unlock date across Seed wallets.</p>
       </div>
       <h2 class="section-title">Allocation</h2>
       <div class="card" style="overflow-x:auto">
@@ -257,7 +260,7 @@
               <td class="num">25,000,000</td>
               <td class="num">2.5%</td>
               <td>6-month cliff + 18-month linear via Magna<br /><span style="color:var(--muted);font-size:12px">Starts at purchase · Seed opens 1 Nov 2026, 7:00 PM ET</span></td>
-              <td><span class="status tbd">Opens Sunday evening ET · still restricted until unlocks</span></td>
+              <td><span class="status tbd">Restricted · per-purchase schedule</span></td>
             </tr>
           </tbody>
         </table>
@@ -266,12 +269,12 @@
 
     <!-- TEAM -->
     <section class="panel" id="panel-team" role="tabpanel" aria-labelledby="tab-team" hidden>
-      <div class="note">Team &amp; Advisors vesting started <strong>30 Oct 2026, 12:47 PM ET</strong>: <strong>6-month cliff</strong>, then <strong>42-month linear</strong> (4 years total). Final unlock <strong>30 Oct 2030, 12:47 PM ET</strong> — vesting flow stops there. Schedule start = onchain funding arrival of 50,000,000 ONMX (BscScan tx <a href="https://bscscan.com/tx/0x0c0e7b31073f86768e46ad3be5265d9eacffcd29c7baab73e32c496046d68a1b" target="_blank" rel="noopener">0x0c0e7b31…</a>, 30 Oct 2026 12:47:31 PM ET).</div>
+      <div class="note"><strong>Disclosure.</strong> Team &amp; Advisors vesting commenced <strong>30 Oct 2026, 12:47 PM ET</strong> with a <strong>6-month cliff</strong> followed by <strong>42-month linear</strong> vesting (4 years total). Vesting <strong>ends at final unlock on 30 Oct 2030, 12:47 PM ET</strong>. The schedule start is the onchain funding arrival of 50,000,000 ONMX (BscScan tx <a href="https://bscscan.com/tx/0x0c0e7b31073f86768e46ad3be5265d9eacffcd29c7baab73e32c496046d68a1b" target="_blank" rel="noopener">0x0c0e7b31…</a>, 30 Oct 2026 12:47:31 PM ET).</div>
       <div class="grid metrics" id="metrics-team"></div>
       <h2 class="section-title">Schedule</h2>
       <div class="card"><dl class="props" id="props-team"></dl></div>
       <h2 class="section-title">Vesting curve</h2>
-      <p class="caption">Flat through the 6-month cliff, then linear to final unlock. Hover for date + vested ONMX.</p>
+      <p class="caption">No tokens vest during the 6-month cliff; vesting is linear thereafter to final unlock. Hover or drag for exact values.</p>
       <div class="card chart-wrap">
         <canvas class="curve" id="curve-team" width="1080" height="440"></canvas>
         <div class="tooltip" id="tip-team">
@@ -290,7 +293,7 @@
               <td class="num">50,000,000</td>
               <td class="num">5.0%</td>
               <td>4-year: 6-month cliff + 42-month linear via Magna<br /><span style="color:var(--muted);font-size:12px">30 Oct 2026, 12:47 PM ET → 30 Oct 2030, 12:47 PM ET</span></td>
-              <td><span class="status">Still restricted · in cliff</span></td>
+              <td><span class="status">Restricted · in cliff period</span></td>
             </tr>
           </tbody>
         </table>
@@ -298,8 +301,8 @@
     </section>
 
     <footer>
-      Source of truth: live Magna contracts and on-chain state, then official GitBook deployments registry.<br />
-      Built by <a href="https://onchainmatrix.com">Onchain Matrix</a>.
+      Reference only; not an offer or solicitation. Authoritative state is the onchain Magna vesting smart contracts, followed by the official GitBook deployments registry.<br />
+      © Onchain Matrix · <a href="https://onchainmatrix.com">onchainmatrix.com</a>
     </footer>
   </div>
 
@@ -400,15 +403,15 @@
   document.getElementById("metrics-treasury").innerHTML = [
     { value: trPast ? "Complete" : (trDays + "d"), label: trPast ? "Schedule status" : "Until final unlock", detail: trPast ? ("Ended " + formatDateET(trEnd)) : (trHours + "h " + trMins + "m · " + formatDateET(trEnd)) },
     { value: fmt(trNow), label: "Vested (schedule)", detail: trPct.toFixed(2) + "% of allocation · linear" },
-    { value: fmt(trRem), label: "Still restricted", detail: "Allocation − schedule vested" },
+    { value: fmt(trRem), label: "Restricted (unvested)", detail: "Allocation less schedule vested" },
     { value: fmt(TR.scBalance), label: "On vesting smart contract", detail: "Live balance · BNB Chain" },
   ].map(m => `<div class="card metric"><div class="label">${m.label}</div><div class="value">${m.value}</div><div class="detail">${m.detail}</div></div>`).join("");
 
   document.getElementById("props-treasury").innerHTML = [
     ["Allocation", "Treasury Reserve &amp; LP · 725,000,000 ONMX (72.5%)"],
-    ["Structure", "8-year linear vesting via Magna, powered by Kraken"],
+    ["Structure", "8-year linear vesting via Magna, powered by Kraken · hard stop at final unlock"],
     ["Schedule start", formatDateET(trStart)],
-    ["Final unlock", formatDateET(trEnd) + " · vesting flow stops here"],
+    ["Final unlock", formatDateET(trEnd) + " · vesting ends; no further vesting"],
     ["Vesting smart contract", addrRow(VESTING_SC_TREASURY)],
     ["ONMX token", addrRow(TOKEN)],
     ["Treasury address", addrRow(TREASURY)],
@@ -435,8 +438,8 @@
 
   document.getElementById("metrics-team").innerHTML = [
     { value: inCliff ? (cliffDays + "d") : (teamDays + "d"), label: inCliff ? "Until cliff ends" : "Until final unlock", detail: inCliff ? ("Cliff ends " + formatDateET(teamCliffEnd)) : formatDateET(teamEnd) },
-    { value: fmt(teamNow), label: "Vested (schedule)", detail: teamPct.toFixed(2) + "% · " + (inCliff ? "still in cliff" : "post-cliff linear") },
-    { value: fmt(teamRem), label: "Still restricted", detail: "Allocation − schedule vested" },
+    { value: fmt(teamNow), label: "Vested (schedule)", detail: teamPct.toFixed(2) + "% · " + (inCliff ? "in cliff period" : "post-cliff linear") },
+    { value: fmt(teamRem), label: "Restricted (unvested)", detail: "Allocation less schedule vested" },
     { value: fmt(TEAM.scBalance), label: "On vesting smart contract", detail: "Live balance · BNB Chain" },
   ].map(m => `<div class="card metric"><div class="label">${m.label}</div><div class="value">${m.value}</div><div class="detail">${m.detail}</div></div>`).join("");
 
@@ -445,7 +448,7 @@
     ["Structure", "4-year: 6-month cliff + 42-month linear via Magna"],
     ["Schedule start", formatDateET(teamStart)],
     ["Cliff ends", formatDateET(teamCliffEnd)],
-    ["Final unlock", formatDateET(teamEnd) + " · vesting flow stops here"],
+    ["Final unlock", formatDateET(teamEnd) + " · vesting ends; no further vesting"],
     ["Vesting smart contract", addrRow(VESTING_SC_TEAM)],
     ["ONMX token", addrRow(TOKEN)],
   ].map(([k,v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("");
@@ -555,7 +558,7 @@
     if (panels[key] && panels[key].hidden) return;
     const ctx = c.ctx;
     const { w, h } = layout(c);
-    const padL = 64, padR = 40, padT = 24, padB = 64;
+    const padL = 64, padR = 48, padT = 24, padB = 64;
     const innerW = w - padL - padR;
     const innerH = h - padT - padB;
     const xAt = (t) => padL + t * innerW;
@@ -573,7 +576,7 @@
     });
     [0, 0.25, 0.5, 0.75, 1].forEach((f) => {
       const p = c.points[Math.round(f * CURVE_POINTS)];
-      ctx.textAlign = f === 1 ? "end" : (f === 0 ? "start" : "middle");
+      ctx.textAlign = f === 1 ? "end" : (f === 0 ? "start" : "center");
       ctx.fillText(p.date.toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "America/New_York" }), xAt(p.t), h - 22);
     });
     if (c.cliffEnd) {
@@ -588,8 +591,8 @@
       ctx.fillText("Cliff ends", xAt(ct), padT + 12);
     }
     const grad = ctx.createLinearGradient(0, padT, 0, padT + innerH);
-    grad.addColorStop(0, "rgba(7,233,251,0.28)");
-    grad.addColorStop(0.55, "rgba(88,135,244,0.12)");
+    grad.addColorStop(0, "rgba(7,233,251,0.14)");
+    grad.addColorStop(0.55, "rgba(88,135,244,0.06)");
     grad.addColorStop(1, "rgba(139,79,245,0.03)");
     ctx.beginPath();
     c.points.forEach((p, i) => { const x = xAt(p.t), y = yAt(p.vested); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
@@ -601,7 +604,7 @@
     strokeGrad.addColorStop(0, "#07E9FB");
     strokeGrad.addColorStop(0.55, "#5887F4");
     strokeGrad.addColorStop(1, "#8B4FF5");
-    ctx.strokeStyle = strokeGrad; ctx.lineWidth = 3; ctx.lineJoin = "round"; ctx.stroke();
+    ctx.strokeStyle = strokeGrad; ctx.lineWidth = 2; ctx.lineJoin = "round"; ctx.stroke();
     const nx = xAt(c.nowT), ny = yAt(c.nowVested);
     ctx.setLineDash([5, 5]); ctx.strokeStyle = "#07E9FB"; ctx.lineWidth = 1.5;
     ctx.beginPath(); ctx.moveTo(nx, padT); ctx.lineTo(nx, padT + innerH); ctx.stroke();
